@@ -10,8 +10,9 @@ TrackMyExpenses is a simple Django web application for tracking personal expense
 
 - Instructions for installing the project, including any dependencies or prerequisites needed to run it.
 
-1. Clone the repository:
+
 ```console
+1. Clone the repository:
 git clone https://github.com/yourusername/yourprojectname.git
 
 
