@@ -1,0 +1,164 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% comment %} <link rel="stylesheet" type="text/css" href=try.css> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'addmoney.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>My Wallet</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+    integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+    crossorigin="anonymous"></script>
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+  crossorigin="anonymous"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+    crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<!-- my_template.html -->
+{% include 'home/navbar.html' %} 
+<div id="layoutSidenav">
+    {% include 'home/sidebar.html' %}
+    <div id="layoutSidenav_content">
+        <div class="bg-text">
+            <div id="layoutAuthentication">
+                <div id="layoutAuthentication_content">
+                    <main>
+                        <div class="container2">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-5">
+                                    <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                        <div class="card-header"><h2 class="text-center font-weight-light">Track Item</h2></div>
+                                        <form method="post" action="/addmoney_submission/" class="p-4">
+                                            {% csrf_token %}
+                                            <!-- What do you want to add? -->
+                                            <label>What do you want to add?</label>
+                                            <div class="form-check">
+                                                <label class="form-check-label" for="add_money">
+                                                <input class="form-check-input" type="radio" name="add_money" id="add_money_expense" value="Expense" checked required>
+                                                Expense
+                                                </label>
+                                            </div>
+                                            <div class="form-check">      
+                                                <label class="form-check-label" for="add_money_income">
+                                                    <input class="form-check-input" type="radio" name="add_money" id="add_money_income" value="Income" required>
+                                                    Income
+                                                </label>
+                                            </div>
+                                            <br>
+                                            <!-- Amount -->
+                                            <div class="form-group">
+                                            <label for="quantity">Amount</label>
+                                            <input type="number" class="form-control" id="quantity" name="quantity" aria-describedby="emailHelp" placeholder="Enter amount" required>
+                                            <br>
+                                            </div>
+                                            <!-- Date -->
+                                            <div class="form-group">
+                                            <label>Date:
+                                                <input type="date" class="form-control" id="date" name="Date" required>
+                                            </label>
+                                            
+                                            </div>
+                                            <!-- {% for category in categories%}
+                                                <select><option>{{category.cat_type}}</option></select>
+                                            {% endfor %} -->
+                                            
+                                            <!-- Options -->
+                                            <div class="form-group">
+                                                <label for="category">Select Category</label>
+                                                
+                                                <select id="category-select" class="form-control" class="Category" name="Category" required aria-placeholder="select" required>
+                                                        <option value="" disabled selected hidden>Select an option</option>
+                                                        {% for category in categories %}
+                                                            <option value="{{ category.name }}" style='display: none;' class="category {{category.cat_type }}">{{category.name}}</option>
+                                                        {% endfor %}
+                                                        <option value="Others">Others</option>
+                                                </select>
+                                                <br>
+                                            </div>
+                                            <!-- New Category -->
+                                            <div id="new-category-input" style="display:none;" class="form-group">
+                                                <label for="quantity">Add New Category</label>
+                                                <input type="text" name="new_category" class="form-control" id="new_category" placeholder="Enter New Category">
+                                                <br>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary w-100" href='/addmoney'>Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    const radioButtons = document.querySelectorAll('input[type=radio][name=add_money]');
+    const categories = document.querySelectorAll('.category');
+    
+    radioButtons.forEach(radioButton => {
+        if (radioButton.checked) {
+                const catType = radioButton.value
+                categories.forEach(category => {
+                if (category.classList.contains(`${catType}`)) {
+                    category.style.display = 'block';
+                } else {
+                    category.style.display = 'none';
+                }
+        });}
+    })
+
+    console.log(radioButtons.value)
+    radioButtons.forEach(radioButton => {
+        radioButton.addEventListener('click', () => {
+            if (radioButton.checked) {
+                const catType = radioButton.value
+                categories.forEach(category => {
+                if (category.classList.contains(`${catType}`)) {
+                    category.style.display = 'block';
+                } else {
+                    category.style.display = 'none';
+                }
+                });
+            }
+        });
+    });
+    
+    var categorySelect = document.getElementById("category-select");
+    var newCategoryInput = document.getElementById("new-category-input");
+    var newCategoryInputField = document.getElementById("new_category");
+
+    categorySelect.addEventListener("change", function() {
+        if (categorySelect.value === "Others") {
+            newCategoryInput.style.display = "block";
+            newCategoryInputField.setAttribute("name", "Category");
+            newCategoryInputField.setAttribute("required", "true");
+            newCategoryInput.value = categorySelect.value
+        } else {
+            newCategoryInput.style.display = "none";
+            newCategoryInput.removeAttribute("name");
+            newCategoryInputField.removeAttribute("required");
+        }
+    });
+
+    newCategoryInput.addEventListener("input", function() {
+        categorySelect.value = newCategoryInput.value;
+    });
+</script>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"
+                                crossorigin="anonymous"></script>
+<script src="{% static 'javascript/scripts.js'%}"></script>               
+</body>
+</html>

@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Tables - SB Admin</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+          crossorigin="anonymous"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+            crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+    {% include 'home/navbar.html' %}
+<div id="layoutSidenav">
+    {% include 'home/sidebar.html' %}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">History</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/index">Dashboard</a></li>
+                    <li class="breadcrumb-item active">HISTORY</li>
+                </ol>
+                <form action="/search/" method="get">
+                    From : <input type="date" class="py-1 mb-0" name="fromdate" required/>
+                    To : <input type="date" class="py-1" name="todate" required/>
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-primary py-2" value="Search"/>
+                    <a href="{% url 'tables'  %}" class="btn btn-success py-2" role="button" aria-pressed="true"
+                       >All Records</a>
+                    </a>
+                </form>
+                <br/>
+                <br>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        DataTable
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>What you added</th>
+                                    <th>Amount</th>
+                                    <th>Category</th>
+                                    <th>Date</th>
+                                </tr>
+                                </thead>
+                                {% for money in addmoney %}
+                                <tbody>
+                                <tr>
+                                    <td>{{money.add_money}}</td>
+                                    <td>{{money.quantity}}</td>
+                                    <td>{{money.Category.name}}</td>
+                                    <td>{{money.Date}}</td>
+                                </tr>
+                                {% endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"
+                crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"
+                crossorigin="anonymous"></script>
+        <script src="assets/demo/datatables-demo.js"></script>
+</body>
+</html>

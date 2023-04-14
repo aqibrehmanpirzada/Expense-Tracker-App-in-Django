@@ -1,0 +1,21 @@
+body, html {
+	height: 100%;
+  }
+  
+* {
+	box-sizing: border-box;
+}
+
+.h1{
+	  color: darkgreen;
+}
+
+.bg-text {
+	background-color: white;
+	color: black !important;
+	font-weight: bold;
+	font-family: 'Times New Roman', Times, serif;
+	height: 100%;
+}
+  
+			  
