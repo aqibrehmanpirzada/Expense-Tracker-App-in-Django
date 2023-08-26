@@ -11,45 +11,46 @@ TrackMyExpenses is a simple Django web application for tracking personal expense
 - Instructions for installing the project, including any dependencies or prerequisites needed to run it.
 
 
-```console
 1. Clone the repository:
-git clone https://github.com/yourusername/yourprojectname.git
 
+```
+git clone https://github.com/yourusername/yourprojectname.git
+```
 
 2. Navigate to the project directory: 
-```console
+```
 cd Expense Tracker/
-
+```
 
 3. Create a virtual environment:
-```console
+```
 python3 -m venv env
-
+```
 
 4. Activate the virtual environment:
-```console
+```
 source env/bin/activate
-
+```
 
 5. Install the required dependencies: 
-```console
+```
 pip install -r requirements.txt
-
+```
 
 6. Set up the database: 
-```console
+```
 python manage.py migrate
-
+```
 
 7. Create a superuser:
-```console
+```
 python manage.py createsuperuser
-
+```
 
 8. Run the development server: 
-```console
+```
 python manage.py runserver
-
+```
 
 ## Usage
 
